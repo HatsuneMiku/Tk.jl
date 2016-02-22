@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ## Tests
 using Tk
 using Compat
@@ -312,5 +313,11 @@ module example_workspace
     aft.stop()
     sleep(1.5)
     destroy(w)
+end
+module example_test_tk
+    include("../examples/test_tk.jl")
+    w = test_tk("title日本語漢字表示申能")
+    sleep(1.5)
+    exists(w) && destroy(w)
 end
 cd(dcur)

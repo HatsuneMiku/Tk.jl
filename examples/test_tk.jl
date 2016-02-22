@@ -75,27 +75,35 @@ function test_tk(p::AbstractString)
   grid_rowconfigure(f1, 3, weight=1)
 
   sash_dir = "vertical" # "horizontal"
-  f2 = Frame(nb, padding=[16,16,8,8], relief="groove")
+  f2 = Frame(nb, padding=[8,16,8,16], relief="groove")
   page_add(f2, "椨 2")
   p21 = Panedwindow(f2, sash_dir)
   # pack(p21, expand=true, fill="both")
   grid(p21, 1, 1, sticky="news")
   grid_columnconfigure(f2, 1, weight=1)
   grid_rowconfigure(f2, 1, weight=1)
-  b2 = Button(p21, "鹽🐢 2")
-  page_add(b2, 2)
-  # callback_add(b2, cbk_dsp)
-  bind(b2, "command", cbk_dsp)
-  bind(b2, "<Return>", cbk_dsp)
-  l2 = Label(p21, "paned2ラベル")
-  page_add(l2, 1)
-  ff = Frame(p21)
-  formlayout(Entry(ff), "Name:")
-  formlayout(Entry(ff), "Rank:")
-  formlayout(Entry(ff), "Serial Number:")
-  page_add(ff, 3)
-  l3 = Label(p21, "paned3ラベル")
-  page_add(l3, 2)
+    pp1 = Frame(p21, padding=[4,4,4,4], relief="sunken")
+    page_add(pp1, 2)
+      b2 = Button(pp1, "鹽🐢 2")
+      pack(b2, expand=true, fill="both")
+      # callback_add(b2, cbk_dsp)
+      bind(b2, "command", cbk_dsp)
+      bind(b2, "<Return>", cbk_dsp)
+    pp2 = Frame(p21, padding=[4,4,4,4], relief="sunken")
+    page_add(pp2, 1)
+      l2 = Label(pp2, "paned2ラベル")
+      pack(l2, expand=true, fill="both")
+    pp3 = Frame(p21, padding=[4,4,4,4], relief="sunken")
+    page_add(pp3, 3)
+      ff = Frame(pp3)
+      formlayout(Entry(ff), "Name:")
+      formlayout(Entry(ff), "Rank:")
+      formlayout(Entry(ff), "Serial Number:")
+      pack(ff, expand=true, fill="both")
+    pp4 = Frame(p21, padding=[4,4,4,4], relief="sunken")
+    page_add(pp4, 2)
+      l3 = Label(pp4, "paned3ラベル")
+      pack(l3, expand=true, fill="both")
   set_value(p21, 100)
   tcl(p21, "sashpos", 1, 200)
   tcl(p21, "sashpos", 2, 300)
@@ -116,8 +124,8 @@ Uq/TrFWL3Xq7YKeSKSaIzui0+pEAADs=
   for (d, hv, news, img) in img_sash
     d != sash_dir && continue
     try
-      tcl_eval("image create photo img:sash -data {$img}") # => "img:sash"
-      tcl_eval("""ttk::style element create Sash.$hv image [list img:sash] \\
+      tcl_eval("image create photo img:$hv -data {$img}") # => "img:?sash"
+      tcl_eval("""ttk::style element create Sash.$hv image [list img:$hv] \\
         -border {1 1} -sticky $news -padding {1 1}""") # => "Sash.?sash"
     catch e
       if ! isa(e, Tk.TclError) throw(e) end

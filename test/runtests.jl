@@ -2,6 +2,10 @@
 using Tk
 using Compat
 
+function univPath(p)
+  return replace(p, "\\", "/")
+end
+
 ## Toplevel
 w = Toplevel("Toplevel", 400, 400)
 set_position(w, 10, 10)
@@ -132,7 +136,7 @@ end
 bind(b, "command", cb)
 tcl(b, "invoke")
 @assert ctr == 2
-img = Image(Pkg.dir("Tk", "examples", "weather-overcast.gif"))
+img = Image(univPath(Pkg.dir("Tk", "examples", "weather-overcast.gif")))
 map(u-> configure(u, image=img, compound="left"), (l,b))
 destroy(w)
 
